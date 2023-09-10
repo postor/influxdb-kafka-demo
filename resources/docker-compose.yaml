@@ -27,8 +27,38 @@ services:
     - "9092:9092"
     environment:
       LOG_DIR: "/tmp/logs"
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
 
+  influxdb:
+    image: influxdb:2.0
+    container_name: influxdb
+    ports:
+      - "8086:8086"
+      - "8087:8087"
+    volumes:
+      - ./data/influxdb/data:/var/lib/influxdb2
+      - ./data/influxdb/config:/etc/influxdb2
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=admin
+      - DOCKER_INFLUXDB_INIT_PASSWORD=admin1234
+      - DOCKER_INFLUXDB_INIT_ORG=InfluxGarden
+      - DOCKER_INFLUXDB_INIT_BUCKET=garden_sensor_data
+      - DOCKER_INFLUXDB_INIT_RETENTION=1w
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN="0cONMdxfCrvkMIDeRCjsx-BrTysiUaN47nKXMTZCGIXWNS5M85tw?ZboGx5ylv-gus5BYqoVacji7-LG13WOMO=="
 
+  telegraf:
+    image: telegraf
+    volumes:
+      - ./config/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+    environment:
+      - INFLUX_TOKEN="0cONMdxfCrvkMIDeRCjsx-BrTysiUaN47nKXMTZCGIXWNS5M85tw?ZboGx5ylv-gus5BYqoVacji7-LG13WOMO=="
+
+  sensor:
+    build:
+      context: ../app
+      dockerfile: Dockerfile
+    environment:
+      - KAFKA_BROKER=kafka:9092
