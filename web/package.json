@@ -1,10 +1,11 @@
 {
   "name": "ts-react-router",
   "version": "1.0.0",
-  "description": "",
+  "description": "## setup",
   "scripts": {
     "dev": "webpack serve --node-env=development --mode=development",
-    "build": "webpack build --mode=production"
+    "build": "webpack build --mode=production",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
@@ -41,5 +42,13 @@
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1"
-  }
+  },
+  "main": "postcss.config.js",
+  "dependencies": {
+    "@influxdata/influxdb-client": "^1.33.2",
+    "@influxdata/influxdb-client-apis": "^1.33.2",
+    "body-parser": "^1.20.2",
+    "express": "^4.18.2"
+  },
+  "license": "ISC"
 }

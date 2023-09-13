@@ -47,14 +47,14 @@ services:
       - DOCKER_INFLUXDB_INIT_ORG=InfluxGarden
       - DOCKER_INFLUXDB_INIT_BUCKET=garden_sensor_data
       - DOCKER_INFLUXDB_INIT_RETENTION=1w
-      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN="0cONMdxfCrvkMIDeRCjsx-BrTysiUaN47nKXMTZCGIXWNS5M85tw?ZboGx5ylv-gus5BYqoVacji7-LG13WOMO=="
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=0cONMdxfCrvkMIDeRCjsx-BrTysiUaN47nKXMTZCGIXWNS5M85tw?ZboGx5ylv-gus5BYqoVacji7-LG13WOMO==
 
   telegraf:
     image: telegraf
     volumes:
       - ./config/telegraf.conf:/etc/telegraf/telegraf.conf:ro
     environment:
-      - INFLUX_TOKEN="0cONMdxfCrvkMIDeRCjsx-BrTysiUaN47nKXMTZCGIXWNS5M85tw?ZboGx5ylv-gus5BYqoVacji7-LG13WOMO=="
+      - INFLUX_TOKEN=0cONMdxfCrvkMIDeRCjsx-BrTysiUaN47nKXMTZCGIXWNS5M85tw?ZboGx5ylv-gus5BYqoVacji7-LG13WOMO==
 
   sensor:
     build:
